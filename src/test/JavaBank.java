@@ -3,6 +3,7 @@ package test;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.border.*;
 
@@ -80,8 +81,9 @@ public class JavaBank extends JFrame {
  
     // two-dimensional array to store Account details
 
-    static AbstractBankAccount myAccounts[]  = new AbstractBankAccount[MaxAccounts];
-    
+    //static AbstractBankAccount myAccounts[]  = new AbstractBankAccount[MaxAccounts];
+    static ArrayList<AbstractBankAccount> myAccounts = new ArrayList<AbstractBankAccount>();
+
     static int noAccounts = 0; 
  
     // constructor
@@ -359,7 +361,7 @@ public class JavaBank extends JFrame {
 
             if (actType.equals(AccountType.CREDIT)) {
 
-                myAccounts[noAccounts] = new CreditAccount(Name, Accountnum, Balance);
+                myAccounts.add( new CreditAccount(Name, Accountnum, Balance));
                 actType = AccountType.SAVINGS;
                 AccountNames[noAccounts] = "USED";
 
@@ -367,12 +369,12 @@ public class JavaBank extends JFrame {
 
             else {
 
-                myAccounts[noAccounts] = new Account(Name, Accountnum, Balance, actType);
+                myAccounts.add(new Account(Name, Accountnum, Balance, actType));
                 AccountNames[noAccounts] = "USED";
 
             }
 
-            displayAccountDetails(myAccounts[noAccounts]);
+            displayAccountDetails(myAccounts.get(noAccounts));
             noAccounts++;
             System.out.println(noAccounts);
 
@@ -421,15 +423,19 @@ public class JavaBank extends JFrame {
             int Withdraw = Integer.parseInt(WithdrawJTextField.getText());
         
              
-            for (int i=0; i<noAccounts; i++) {
-        	if ((myAccounts[i].getaccountnum() == Accountnum) && (Deposit>0)) {
-        		    myAccounts[i].setbalance(myAccounts[i].getbalance()+Deposit);
-        		    displayJTextArea.setText(myAccounts[i].getaccountname() + " " + myAccounts[i].getaccountnum() + " " + myAccounts[i].getbalance());
+            for (int i=0; i <noAccounts; i++) {
+        	if ((myAccounts.get(i).getaccountnum() == Accountnum) && (Deposit>0)) {
+        		    myAccounts.get(i).setbalance(myAccounts.get(i).getbalance()+Deposit);
+        		    displayJTextArea.setText(myAccounts.get(i).getaccountname()
+                                             + " " + myAccounts.get(i).getaccountnum()
+                                             + " " + myAccounts.get(i).getbalance());
         	}
         		
-        	if ((myAccounts[i].getaccountnum() == Accountnum) && (Withdraw>0)) {        		
-        			 myAccounts[i].setbalance(myAccounts[i].getbalance()-Withdraw);
-        			 displayJTextArea.setText(myAccounts[i].getaccountname() + " " + myAccounts[i].getaccountnum() + " " + myAccounts[i].getbalance());
+        	if ((myAccounts.get(i).getaccountnum() == Accountnum) && (Withdraw>0)) {
+        			 myAccounts.get(i).setbalance(myAccounts.get(i).getbalance()-Withdraw);
+        			 displayJTextArea.setText(myAccounts.get(i).getaccountname()
+                                              + " " + myAccounts.get(i).getaccountnum()
+                                              + " " + myAccounts.get(i).getbalance());
         	}
         	
         	        }
@@ -456,10 +462,10 @@ public class JavaBank extends JFrame {
     	}else {
     	for (int i=0; i<noAccounts; i++) { 
     		
-    			displayJTextArea.append("Bank name: " + myAccounts[i].getBankName() + " "
-                                        + "\nAccount name: " + myAccounts[i].getaccountname() + " "
-                                        + "\nAcc num: " + myAccounts[i].getaccountnum() + " " 
-                                        + "\nBalance: R" + myAccounts[i].getbalance());
+    			displayJTextArea.append("Bank name: " + myAccounts.get(i).getBankName() + " "
+                                        + "\nAccount name: " + myAccounts.get(i).getaccountname() + " "
+                                        + "\nAcc num: " + myAccounts.get(i).getaccountnum() + " "
+                                        + "\nBalance: R" + myAccounts.get(i).getbalance());
          	    
     		
     		
